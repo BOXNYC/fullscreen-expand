@@ -1,0 +1,34 @@
+{
+  "name": "Fullscreen Expand",
+  "type": "fullscreen-expand",
+  "tagName": "fullscreen-expand",
+  "version": 0.1,
+  "description": "Launches ad into fullscreen",
+  "files": {
+    "js": [
+      "Enabler-fullscreen-v0.1.js",
+      "fullscreen-expand-v0.1.js"
+    ]
+  },
+  "attributes": [],
+  "events": [],
+  "methods": [
+    {
+      "name": "expand",
+      "label": "Expand fullscreen",
+      "description": "Expands to fullscreen using Enabler.",
+      "parameters": [{
+        "name": "useMobileInnerHeight",
+        "label": "Use mobile inner height",
+        "type": "boolean",
+        "optional": true
+      }]
+    }, {
+      "name": "collapse",
+      "label": "Collapse fullscreen",
+      "description": "Collapses fullscreen using Enabler.",
+      "parameters": []
+    }
+  ],
+  "nestable": false
+}
