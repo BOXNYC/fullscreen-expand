@@ -14,35 +14,50 @@
   if (typeof Enabler.fullscreen.expand !== 'function')
     return console.error('gwd.actions.fullscreenExpand: Enabler.fullscreen.expand is not a method.');
   
+  var debug = false;
+  
   function fslog() {
+    if (!debug) return;
     console.log.apply(console, arguments);
   };
   
   function onFullscreenExpandStart(e) {
-    fslog('onFullscreenExpandStart');
+    fslog('onFullscreenExpandStart', e);
+    var bannerPage = document.getElementById('banner-page');
+    if (bannerPage) {
+      bannerPage.style.top = e.top + 'px';
+      bannerPage.style.left = e.left + 'px';
+    }
   };
   
   function onFullscreenExpandFinish(e) {
-    fslog('onFullscreenExpandFinish');
+    fslog('onFullscreenExpandFinish', e);
+    var pages = document.querySelectorAll('#pagedeck > gwd-page');
+    if (pages.length != 2 || ( pages.length == 2 && pages[1].id != 'expanded-page' )) goToExpandedPage();
     document.body.classList.add('fullscreen');
   };
   
   function onFullscreenCollapseFinish(e) {
-    fslog('fullscreenCollapseFinishHandler');
+    fslog('fullscreenCollapseFinishHandler', e);
     document.body.classList.remove('fullscreen');
-    gwd.isFullscreen = gwd.fullscreenCalled = false;
-    Enabler.removeEventListener(studio.events.StudioEvent.FULLSCREEN_COLLAPSE_FINISH, fullscreenCollapseFinishHandler);
   };
   
   function onFullscreenCollapseStart(e) {
-    fslog('onFullscreenCollapseStart');
+    fslog('onFullscreenCollapseStart', e);
     var bannerPage = document.getElementById('banner-page');
-    bannerPage.style.left = '0px';
-    bannerPage.style.top = '0px';
+    if (bannerPage) {
+      bannerPage.style.left = '0px';
+      bannerPage.style.top = '0px';
+    }
   };
   
   function onError(e) {
-    
+    goToExpandedPage();
+  };
+  
+  function goToExpandedPage() {
+    fslog('goToExpandedPage');
+    gwd.actions.events.getElementById('gwd-ad').goToPage('expanded-page');
   };
   
   function addFullscreenStyles() {
